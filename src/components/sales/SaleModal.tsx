@@ -124,8 +124,7 @@ export function SaleModal({
       
       setFormData(prev => ({
         ...prev,
-        [name]: taxRate,
-        tax,
+        tax: taxRate,
         total
       }));
     } else {
