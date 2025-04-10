@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -116,7 +115,11 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+			},
+			backgroundImage: {
+				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+				'orange-purple-gradient': 'linear-gradient(to right, hsl(var(--primary)), hsl(var(--secondary)))',
+			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],

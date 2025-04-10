@@ -5,66 +5,66 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 222 47% 13%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 201 89% 48%;
+    --primary: 24 100% 60%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 174 100% 42%;
+    --secondary: 288 95% 70%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 174 100% 42%;
+    --accent: 24 100% 60%;
     --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 201 89% 48%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 24 100% 60%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 215 79% 16%;
+    --sidebar-background: 222 47% 8%;
     --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 201 89% 48%;
+    --sidebar-primary: 24 100% 60%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 216 65% 22%;
+    --sidebar-accent: 222 47% 15%;
     --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 216 65% 25%;
-    --sidebar-ring: 201 89% 48%;
+    --sidebar-border: 222 47% 18%;
+    --sidebar-ring: 24 100% 60%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 222 47% 11%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 222 47% 13%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 222 47% 11%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 201 89% 48%;
+    --primary: 24 100% 60%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 174 100% 42%;
+    --secondary: 288 95% 70%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 222 47% 15%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -72,16 +72,16 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 201 89% 48%;
+    --ring: 24 100% 60%;
     
-    --sidebar-background: 215 79% 16%;
+    --sidebar-background: 222 47% 8%;
     --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 201 89% 48%;
+    --sidebar-primary: 24 100% 60%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 216 65% 22%;
+    --sidebar-accent: 222 47% 15%;
     --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 216 65% 25%;
-    --sidebar-ring: 201 89% 48%;
+    --sidebar-border: 222 47% 18%;
+    --sidebar-ring: 24 100% 60%;
   }
 }
 
@@ -97,18 +97,32 @@
 
 @layer components {
   .stat-card {
-    @apply bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200;
+    @apply bg-card dark:bg-card rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200;
   }
   
   .stat-value {
-    @apply text-3xl font-bold text-bizblue-600 dark:text-bizblue-400;
+    @apply text-3xl font-bold text-primary dark:text-primary;
   }
   
   .stat-label {
-    @apply text-sm font-medium text-gray-500 dark:text-gray-400;
+    @apply text-sm font-medium text-muted-foreground dark:text-muted-foreground;
   }
   
   .section-title {
-    @apply text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4;
+    @apply text-xl font-semibold text-foreground dark:text-foreground mb-4;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+  
+  .gradient-bg {
+    @apply bg-gradient-to-r from-primary to-secondary;
+  }
+  
+  .gradient-border {
+    @apply border-2 border-transparent bg-clip-border;
+    background-image: linear-gradient(to right, theme('colors.primary.DEFAULT'), theme('colors.secondary.DEFAULT'));
   }
 }
+

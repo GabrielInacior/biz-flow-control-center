@@ -61,19 +61,20 @@ export default function MainLayout({ children }: MainLayoutProps) {
   }, [location.pathname, isMobile]);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background">
       {/* Header for mobile */}
-      <header className="lg:hidden bg-white dark:bg-gray-900 shadow-sm py-4 px-4">
+      <header className="lg:hidden bg-card/50 backdrop-blur-sm shadow-sm py-4 px-4 border-b border-muted">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="text-foreground"
             >
               <Menu className="h-6 w-6" />
             </Button>
-            <h1 className="ml-3 text-xl font-bold text-bizblue-600 dark:text-bizblue-400">
+            <h1 className="ml-3 text-xl font-bold gradient-text">
               BizManager
             </h1>
           </div>
@@ -98,7 +99,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
               !sidebarOpen && "lg:justify-center"
             )}>
               {sidebarOpen && (
-                <h1 className="text-xl font-bold text-white">BizManager</h1>
+                <h1 className="text-xl font-bold gradient-text">BizManager</h1>
               )}
               <Button
                 variant="ghost"
@@ -126,7 +127,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
                           className={cn(
                             "flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors",
                             isActive
-                              ? "bg-sidebar-accent text-white"
+                              ? "bg-gradient-to-r from-primary to-secondary text-white"
                               : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-white"
                           )}
                         >
@@ -150,7 +151,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
             )}>
               {sidebarOpen ? (
                 <div className="flex items-center">
-                  <div className="h-8 w-8 rounded-full bg-bizteal-500 flex items-center justify-center text-white">
+                  <div className="h-8 w-8 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center text-white">
                     A
                   </div>
                   <div className="ml-3">
@@ -159,7 +160,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
                   </div>
                 </div>
               ) : (
-                <div className="h-8 w-8 rounded-full bg-bizteal-500 flex items-center justify-center text-white">
+                <div className="h-8 w-8 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center text-white">
                   A
                 </div>
               )}
@@ -168,7 +169,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
         </aside>
 
         {/* Main content */}
-        <main className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900">
+        <main className="flex-1 overflow-y-auto bg-background">
           <div className="container py-6 px-4 md:px-6">
             {children}
           </div>

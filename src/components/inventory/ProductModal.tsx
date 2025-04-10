@@ -107,12 +107,12 @@ export function ProductModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[525px]">
+      <DialogContent className="sm:max-w-[525px] bg-card border-muted">
         <DialogHeader>
-          <DialogTitle>
+          <DialogTitle className="gradient-text">
             {mode === "create" ? "Add New Product" : "Edit Product"}
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-muted-foreground">
             {mode === "create"
               ? "Fill in the details to add a new product to your inventory."
               : "Update the product information in your inventory."}
@@ -121,7 +121,7 @@ export function ProductModal({
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
+              <Label htmlFor="name" className="text-right text-foreground">
                 Name
               </Label>
               <Input
@@ -130,12 +130,12 @@ export function ProductModal({
                 placeholder="Product name"
                 value={formData.name}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-3 bg-background/50"
                 required
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="sku" className="text-right">
+              <Label htmlFor="sku" className="text-right text-foreground">
                 SKU
               </Label>
               <Input
@@ -144,21 +144,21 @@ export function ProductModal({
                 placeholder="Stock keeping unit"
                 value={formData.sku}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-3 bg-background/50"
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="category" className="text-right">
+              <Label htmlFor="category" className="text-right text-foreground">
                 Category
               </Label>
               <Select
                 value={formData.category}
                 onValueChange={handleCategoryChange}
               >
-                <SelectTrigger className="col-span-3">
+                <SelectTrigger className="col-span-3 bg-background/50">
                   <SelectValue placeholder="Select a category" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-card border-muted">
                   {CATEGORIES.map((category) => (
                     <SelectItem key={category} value={category.toLowerCase()}>
                       {category}
@@ -168,7 +168,7 @@ export function ProductModal({
               </Select>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="price" className="text-right">
+              <Label htmlFor="price" className="text-right text-foreground">
                 Price
               </Label>
               <Input
@@ -180,12 +180,12 @@ export function ProductModal({
                 placeholder="0.00"
                 value={formData.price}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-3 bg-background/50"
                 required
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="costPrice" className="text-right">
+              <Label htmlFor="costPrice" className="text-right text-foreground">
                 Cost Price
               </Label>
               <Input
@@ -197,12 +197,12 @@ export function ProductModal({
                 placeholder="0.00"
                 value={formData.costPrice}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-3 bg-background/50"
                 required
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="stockQuantity" className="text-right">
+              <Label htmlFor="stockQuantity" className="text-right text-foreground">
                 Stock Quantity
               </Label>
               <Input
@@ -213,12 +213,12 @@ export function ProductModal({
                 placeholder="0"
                 value={formData.stockQuantity}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-3 bg-background/50"
                 required
               />
             </div>
             <div className="grid grid-cols-4 items-start gap-4">
-              <Label htmlFor="description" className="text-right pt-2">
+              <Label htmlFor="description" className="text-right pt-2 text-foreground">
                 Description
               </Label>
               <Textarea
@@ -227,13 +227,17 @@ export function ProductModal({
                 placeholder="Product description"
                 value={formData.description}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-3 bg-background/50"
                 rows={3}
               />
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" disabled={loading} className="bg-bizblue-600 hover:bg-bizblue-700">
+            <Button 
+              type="submit" 
+              disabled={loading} 
+              className="bg-gradient-to-r from-primary to-secondary hover:opacity-90"
+            >
               {loading ? "Saving..." : "Save Product"}
             </Button>
           </DialogFooter>

@@ -110,12 +110,12 @@ export function ExpenseModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[525px]">
+      <DialogContent className="sm:max-w-[525px] bg-card border-muted">
         <DialogHeader>
-          <DialogTitle>
+          <DialogTitle className="gradient-text">
             {mode === "create" ? "Record New Expense" : "Edit Expense"}
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-muted-foreground">
             {mode === "create"
               ? "Fill in the details to record a new expense."
               : "Update the expense information."}
@@ -124,7 +124,7 @@ export function ExpenseModal({
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="title" className="text-right">
+              <Label htmlFor="title" className="text-right text-foreground">
                 Title
               </Label>
               <Input
@@ -133,12 +133,12 @@ export function ExpenseModal({
                 placeholder="Expense title"
                 value={formData.title}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-3 bg-background/50"
                 required
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="amount" className="text-right">
+              <Label htmlFor="amount" className="text-right text-foreground">
                 Amount
               </Label>
               <Input
@@ -150,12 +150,12 @@ export function ExpenseModal({
                 placeholder="0.00"
                 value={formData.amount}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-3 bg-background/50"
                 required
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="date" className="text-right">
+              <Label htmlFor="date" className="text-right text-foreground">
                 Date
               </Label>
               <Input
@@ -164,22 +164,22 @@ export function ExpenseModal({
                 type="date"
                 value={formData.date}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-3 bg-background/50"
                 required
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="category" className="text-right">
+              <Label htmlFor="category" className="text-right text-foreground">
                 Category
               </Label>
               <Select
                 value={formData.category}
                 onValueChange={handleCategoryChange}
               >
-                <SelectTrigger className="col-span-3">
+                <SelectTrigger className="col-span-3 bg-background/50">
                   <SelectValue placeholder="Select a category" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-card border-muted">
                   {CATEGORIES.map((category) => (
                     <SelectItem key={category} value={category.toLowerCase()}>
                       {category}
@@ -189,17 +189,17 @@ export function ExpenseModal({
               </Select>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="paymentMethod" className="text-right">
+              <Label htmlFor="paymentMethod" className="text-right text-foreground">
                 Payment Method
               </Label>
               <Select
                 value={formData.paymentMethod}
                 onValueChange={handlePaymentMethodChange}
               >
-                <SelectTrigger className="col-span-3">
+                <SelectTrigger className="col-span-3 bg-background/50">
                   <SelectValue placeholder="Select payment method" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-card border-muted">
                   {PAYMENT_METHODS.map((method) => (
                     <SelectItem key={method} value={method.toLowerCase()}>
                       {method}
@@ -209,7 +209,7 @@ export function ExpenseModal({
               </Select>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="reference" className="text-right">
+              <Label htmlFor="reference" className="text-right text-foreground">
                 Reference
               </Label>
               <Input
@@ -218,11 +218,11 @@ export function ExpenseModal({
                 placeholder="Invoice or receipt number"
                 value={formData.reference}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-3 bg-background/50"
               />
             </div>
             <div className="grid grid-cols-4 items-start gap-4">
-              <Label htmlFor="notes" className="text-right pt-2">
+              <Label htmlFor="notes" className="text-right pt-2 text-foreground">
                 Notes
               </Label>
               <Textarea
@@ -231,13 +231,17 @@ export function ExpenseModal({
                 placeholder="Additional details about this expense"
                 value={formData.notes}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-3 bg-background/50"
                 rows={3}
               />
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" disabled={loading} className="bg-bizblue-600 hover:bg-bizblue-700">
+            <Button 
+              type="submit" 
+              disabled={loading} 
+              className="bg-gradient-to-r from-primary to-secondary hover:opacity-90"
+            >
               {loading ? "Saving..." : "Save Expense"}
             </Button>
           </DialogFooter>
