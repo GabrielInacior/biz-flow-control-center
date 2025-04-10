@@ -112,12 +112,12 @@ export default function Inventory() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold tracking-tight gradient-text">Inventory</h1>
-        <Button onClick={handleAddProduct} className="bg-gradient-to-r from-primary to-secondary hover:opacity-90">
+        <Button onClick={handleAddProduct} className="btn-gradient">
           <PlusCircle className="h-4 w-4 mr-2" /> Add Product
         </Button>
       </div>
       
-      <Card className="border-muted bg-card/50 backdrop-blur-sm">
+      <Card className="border-muted bg-card/50 backdrop-blur-sm card-hover">
         <CardHeader className="pb-3">
           <CardTitle className="text-foreground">Product Management</CardTitle>
           <CardDescription className="text-muted-foreground">
@@ -140,14 +140,14 @@ export default function Inventory() {
               <Button 
                 variant={filter === "all" ? "default" : "outline"}
                 onClick={() => setFilter("all")}
-                className={filter === "all" ? "bg-primary text-primary-foreground" : ""}
+                className={filter === "all" ? "btn-gradient" : ""}
               >
                 All
               </Button>
               <Button 
                 variant={filter === "low-stock" ? "default" : "outline"}
                 onClick={() => setFilter("low-stock")}
-                className={filter === "low-stock" ? "bg-primary text-primary-foreground" : ""}
+                className={filter === "low-stock" ? "btn-gradient" : ""}
               >
                 Low Stock
               </Button>
@@ -262,7 +262,7 @@ export default function Inventory() {
       <ProductModal
         open={modalOpen}
         onOpenChange={setModalOpen}
-        product={selectedProduct as ProductData | undefined}
+        product={selectedProduct as unknown as ProductData | undefined}
         onSave={handleSaveProduct}
         mode={modalMode}
       />

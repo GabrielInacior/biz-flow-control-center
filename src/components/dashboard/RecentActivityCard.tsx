@@ -26,32 +26,32 @@ export function RecentActivityCard({
   onViewAll 
 }: RecentActivityCardProps) {
   return (
-    <Card className={cn("overflow-hidden", className)}>
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <CardTitle className="text-base font-medium">{title}</CardTitle>
+    <Card className={cn("overflow-hidden bg-card/60 backdrop-blur-sm border border-border/40", className)}>
+      <CardHeader className="flex flex-row items-center justify-between pb-2 border-b border-border/20">
+        <CardTitle className="text-base font-medium gradient-text">{title}</CardTitle>
         {onViewAll && (
-          <Button variant="link" size="sm" onClick={onViewAll}>
+          <Button variant="link" size="sm" onClick={onViewAll} className="text-primary hover:text-primary/80">
             View all
           </Button>
         )}
       </CardHeader>
-      <CardContent className="pt-0">
+      <CardContent className="pt-4">
         <div className="space-y-4">
           {activities.map((activity) => (
-            <div key={activity.id} className="flex items-start gap-4">
+            <div key={activity.id} className="flex items-start gap-4 animate-fade hover:bg-muted/10 p-2 rounded-md transition-colors">
               {activity.icon && (
-                <div className="mt-1 bg-gray-100 dark:bg-gray-800 rounded-full p-1.5">
+                <div className="mt-1 bg-background/80 rounded-full p-1.5">
                   {activity.icon}
                 </div>
               )}
               <div className="flex-1 space-y-1">
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-medium">{activity.title}</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-muted-foreground">
                     {activity.timestamp}
                   </p>
                 </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-muted-foreground">
                   {activity.description}
                 </p>
               </div>
@@ -60,7 +60,7 @@ export function RecentActivityCard({
           
           {activities.length === 0 && (
             <div className="text-center py-4">
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-muted-foreground">
                 No recent activities
               </p>
             </div>

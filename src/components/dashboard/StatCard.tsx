@@ -26,7 +26,7 @@ export function StatCard({
   return (
     <Card 
       className={cn(
-        "stat-card overflow-hidden", 
+        "stat-card overflow-hidden bg-card/60 backdrop-blur-sm border border-border/40", 
         onClick && "cursor-pointer",
         className
       )}
@@ -35,7 +35,7 @@ export function StatCard({
       <div className="flex justify-between items-center">
         <div>
           <p className="stat-label">{title}</p>
-          <p className="stat-value">{value}</p>
+          <p className="stat-value gradient-text">{value}</p>
           
           {trend && (
             <div className="flex items-center mt-2">
@@ -46,7 +46,7 @@ export function StatCard({
                 )}
               >
                 {trend.isPositive ? "↑" : "↓"} {Math.abs(trend.value)}%
-                <span className="ml-1 text-gray-500 dark:text-gray-400">
+                <span className="ml-1 text-muted-foreground">
                   from last period
                 </span>
               </span>
@@ -55,7 +55,7 @@ export function StatCard({
         </div>
         
         {icon && (
-          <div className="text-bizteal-500 dark:text-bizteal-400">
+          <div className="text-primary dark:text-primary">
             {icon}
           </div>
         )}

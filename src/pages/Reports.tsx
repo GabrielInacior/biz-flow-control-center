@@ -75,8 +75,8 @@ const monthlyProfitData = [
   { month: "Jun", sales: 8100, expenses: 5600, profit: 2500 },
 ];
 
-// Colors for charts
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#0c92e8'];
+// Updated colors for charts - orange to purple gradient
+const COLORS = ['#FF8042', '#FFA07A', '#E0115F', '#C71585', '#8B008B', '#9932CC'];
 
 export default function Reports() {
   const [period, setPeriod] = useState<"week" | "month" | "year" | "custom">("month");
@@ -97,15 +97,15 @@ export default function Reports() {
   const totalProfit = totalRevenue - totalExpenses;
   
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Reports</h1>
+        <h1 className="text-3xl font-bold tracking-tight gradient-text">Reports</h1>
         <div className="flex items-center space-x-2">
-          <Button variant="outline" className="space-x-2">
+          <Button variant="outline" className="space-x-2 bg-background/50 border-border/40">
             <Calendar className="h-4 w-4" />
             <span>Date Range</span>
           </Button>
-          <Button variant="outline" className="space-x-2">
+          <Button variant="outline" className="space-x-2 bg-background/50 border-border/40">
             <Download className="h-4 w-4" />
             <span>Export</span>
           </Button>
@@ -114,42 +114,42 @@ export default function Reports() {
       
       {/* Key metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Card>
+        <Card className="dashboard-card">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">Total Revenue</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Total Revenue</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-bizblue-600">{formatCurrency(totalRevenue)}</div>
+            <div className="text-2xl font-bold text-primary">{formatCurrency(totalRevenue)}</div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="dashboard-card">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">Total Expenses</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Total Expenses</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-red-600">{formatCurrency(totalExpenses)}</div>
+            <div className="text-2xl font-bold text-destructive">{formatCurrency(totalExpenses)}</div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="dashboard-card">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">Net Profit</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Net Profit</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-bizteal-600">{formatCurrency(totalProfit)}</div>
+            <div className="text-2xl font-bold gradient-text">{formatCurrency(totalProfit)}</div>
           </CardContent>
         </Card>
       </div>
       
       {/* Report tabs */}
       <Tabs defaultValue="sales" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="sales" className="flex items-center gap-1">
+        <TabsList className="bg-muted/30 backdrop-blur-sm">
+          <TabsTrigger value="sales" className="flex items-center gap-1 data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-white">
             <BarChart3 className="h-4 w-4" /> Sales
           </TabsTrigger>
-          <TabsTrigger value="profit" className="flex items-center gap-1">
+          <TabsTrigger value="profit" className="flex items-center gap-1 data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-white">
             <LineChart className="h-4 w-4" /> Profit
           </TabsTrigger>
-          <TabsTrigger value="inventory" className="flex items-center gap-1">
+          <TabsTrigger value="inventory" className="flex items-center gap-1 data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-white">
             <PieChart className="h-4 w-4" /> Inventory
           </TabsTrigger>
         </TabsList>
@@ -157,10 +157,10 @@ export default function Reports() {
         {/* Sales tab content */}
         <TabsContent value="sales" className="space-y-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <Card className="lg:col-span-2">
+            <Card className="lg:col-span-2 dashboard-card">
               <CardHeader>
                 <CardTitle>Monthly Sales</CardTitle>
-                <CardDescription>
+                <CardDescription className="text-muted-foreground">
                   Sales revenue breakdown by month
                 </CardDescription>
               </CardHeader>
@@ -168,22 +168,32 @@ export default function Reports() {
                 <div className="h-[300px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={monthlySalesData} margin={{ top: 5, right: 30, bottom: 5, left: 20 }}>
-                      <CartesianGrid strokeDasharray="3 3" />
+                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
                       <XAxis dataKey="month" />
                       <YAxis tickFormatter={(value) => `$${value}`} />
                       <Tooltip formatter={(value) => [`$${value}`, 'Sales']} />
                       <Legend />
-                      <Bar dataKey="sales" fill="#0c92e8" name="Sales" />
+                      <Bar dataKey="sales" name="Sales" radius={[4, 4, 0, 0]}>
+                        {monthlySalesData.map((_, index) => (
+                          <Cell key={`cell-${index}`} fill={`url(#salesBarGradient)`} />
+                        ))}
+                      </Bar>
+                      <defs>
+                        <linearGradient id="salesBarGradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="hsl(var(--primary))" />
+                          <stop offset="100%" stopColor="hsl(var(--secondary))" />
+                        </linearGradient>
+                      </defs>
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
               </CardContent>
             </Card>
             
-            <Card>
+            <Card className="dashboard-card">
               <CardHeader>
                 <CardTitle>Payment Methods</CardTitle>
-                <CardDescription>
+                <CardDescription className="text-muted-foreground">
                   Sales by payment method
                 </CardDescription>
               </CardHeader>
@@ -212,10 +222,10 @@ export default function Reports() {
               </CardContent>
             </Card>
             
-            <Card>
+            <Card className="dashboard-card">
               <CardHeader>
                 <CardTitle>Expense Categories</CardTitle>
-                <CardDescription>
+                <CardDescription className="text-muted-foreground">
                   Expenses by category
                 </CardDescription>
               </CardHeader>
@@ -248,10 +258,10 @@ export default function Reports() {
         
         {/* Profit tab content */}
         <TabsContent value="profit" className="space-y-4">
-          <Card>
+          <Card className="dashboard-card">
             <CardHeader>
               <CardTitle>Monthly Profit Analysis</CardTitle>
-              <CardDescription>
+              <CardDescription className="text-muted-foreground">
                 Overview of revenue, expenses, and profit over time
               </CardDescription>
             </CardHeader>
@@ -262,29 +272,43 @@ export default function Reports() {
                     data={monthlyProfitData}
                     margin={{ top: 5, right: 30, bottom: 5, left: 20 }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
                     <XAxis dataKey="month" />
                     <YAxis tickFormatter={(value) => `$${value}`} />
                     <Tooltip formatter={(value) => [`$${value}`, '']} />
                     <Legend />
+                    <defs>
+                      <linearGradient id="salesLineGradient" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={1} />
+                        <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity={0.7} />
+                      </linearGradient>
+                      <linearGradient id="expensesLineGradient" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stopColor="#ff8042" stopOpacity={1} />
+                        <stop offset="100%" stopColor="#ff8042" stopOpacity={0.7} />
+                      </linearGradient>
+                      <linearGradient id="profitLineGradient" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stopColor="hsl(var(--secondary))" stopOpacity={1} />
+                        <stop offset="100%" stopColor="hsl(var(--secondary))" stopOpacity={0.7} />
+                      </linearGradient>
+                    </defs>
                     <Line 
                       type="monotone" 
                       dataKey="sales" 
-                      stroke="#0c92e8" 
+                      stroke="url(#salesLineGradient)" 
                       name="Sales" 
                       strokeWidth={2} 
                     />
                     <Line 
                       type="monotone" 
                       dataKey="expenses" 
-                      stroke="#ff8042" 
+                      stroke="url(#expensesLineGradient)" 
                       name="Expenses" 
                       strokeWidth={2} 
                     />
                     <Line 
                       type="monotone" 
                       dataKey="profit" 
-                      stroke="#00d4b0" 
+                      stroke="url(#profitLineGradient)" 
                       name="Profit" 
                       strokeWidth={3}
                     />
@@ -292,19 +316,19 @@ export default function Reports() {
                 </ResponsiveContainer>
               </div>
             </CardContent>
-            <CardFooter className="bg-gray-50 border-t">
+            <CardFooter className="border-t border-border/40 bg-muted/10">
               <div className="grid grid-cols-3 gap-4 w-full">
                 <div className="text-center">
-                  <div className="text-sm font-medium text-gray-500">Avg. Monthly Revenue</div>
-                  <div className="font-bold text-bizblue-600">$6,266</div>
+                  <div className="text-sm font-medium text-muted-foreground">Avg. Monthly Revenue</div>
+                  <div className="font-bold text-primary">$6,266</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-sm font-medium text-gray-500">Avg. Monthly Expenses</div>
-                  <div className="font-bold text-red-600">$4,566</div>
+                  <div className="text-sm font-medium text-muted-foreground">Avg. Monthly Expenses</div>
+                  <div className="font-bold text-destructive">$4,566</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-sm font-medium text-gray-500">Avg. Monthly Profit</div>
-                  <div className="font-bold text-bizteal-600">$1,700</div>
+                  <div className="text-sm font-medium text-muted-foreground">Avg. Monthly Profit</div>
+                  <div className="font-bold text-secondary">$1,700</div>
                 </div>
               </div>
             </CardFooter>
@@ -314,10 +338,10 @@ export default function Reports() {
         {/* Inventory tab content */}
         <TabsContent value="inventory" className="space-y-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <Card>
+            <Card className="dashboard-card">
               <CardHeader>
                 <CardTitle>Product Categories</CardTitle>
-                <CardDescription>
+                <CardDescription className="text-muted-foreground">
                   Distribution of products by category
                 </CardDescription>
               </CardHeader>
@@ -347,10 +371,10 @@ export default function Reports() {
               </CardContent>
             </Card>
             
-            <Card>
+            <Card className="dashboard-card">
               <CardHeader>
                 <CardTitle>Stock Levels</CardTitle>
-                <CardDescription>
+                <CardDescription className="text-muted-foreground">
                   Inventory levels by product
                 </CardDescription>
               </CardHeader>
@@ -359,16 +383,26 @@ export default function Reports() {
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart 
                       layout="vertical" 
-                      data={mockProducts.map(p => ({ name: p.name, stock: p.stockQuantity, reorderLevel: p.reorderLevel }))}
+                      data={mockProducts.slice(0, 6).map(p => ({ name: p.name, stock: p.stockQuantity, reorderLevel: p.reorderLevel }))}
                       margin={{ top: 5, right: 30, bottom: 5, left: 60 }}
                     >
-                      <CartesianGrid strokeDasharray="3 3" />
+                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
                       <XAxis type="number" />
                       <YAxis dataKey="name" type="category" scale="band" />
                       <Tooltip />
                       <Legend />
-                      <Bar dataKey="stock" name="Current Stock" fill="#0c92e8" />
-                      <Bar dataKey="reorderLevel" name="Reorder Level" fill="#ff8042" />
+                      <defs>
+                        <linearGradient id="stockGradient" x1="0" y1="0" x2="1" y2="0">
+                          <stop offset="0%" stopColor="hsl(var(--primary))" />
+                          <stop offset="100%" stopColor="hsl(var(--secondary))" />
+                        </linearGradient>
+                        <linearGradient id="reorderGradient" x1="0" y1="0" x2="1" y2="0">
+                          <stop offset="0%" stopColor="#ff8042" />
+                          <stop offset="100%" stopColor="#ffaf7a" />
+                        </linearGradient>
+                      </defs>
+                      <Bar dataKey="stock" name="Current Stock" fill="url(#stockGradient)" />
+                      <Bar dataKey="reorderLevel" name="Reorder Level" fill="url(#reorderGradient)" />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>

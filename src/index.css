@@ -33,7 +33,7 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 24 100% 60%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
     --sidebar-background: 222 47% 8%;
     --sidebar-foreground: 210 40% 98%;
@@ -124,5 +124,33 @@
     @apply border-2 border-transparent bg-clip-border;
     background-image: linear-gradient(to right, theme('colors.primary.DEFAULT'), theme('colors.secondary.DEFAULT'));
   }
+  
+  /* New utility classes for enhanced design */
+  .card-hover {
+    @apply transition-all duration-300 hover:translate-y-[-5px] hover:shadow-xl;
+  }
+  
+  .glass-effect {
+    @apply backdrop-blur-sm bg-white/5;
+  }
+  
+  .animate-fade {
+    @apply transition-all duration-300 animate-in fade-in;
+  }
+  
+  .btn-gradient {
+    @apply bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90 transition-opacity;
+  }
+  
+  .chart-gradient-primary {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/70;
+  }
+  
+  .chart-gradient-secondary {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-secondary to-secondary/70;
+  }
+  
+  .dashboard-card {
+    @apply bg-card/60 backdrop-blur-sm border border-border/40 rounded-lg shadow-md overflow-hidden;
+  }
 }
-

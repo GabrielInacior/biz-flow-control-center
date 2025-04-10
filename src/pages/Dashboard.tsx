@@ -66,8 +66,8 @@ const formatDate = (dateString: string) => {
   }).format(date);
 };
 
-// Colors for pie chart
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
+// Colors for pie chart - updated to use orange to purple gradient
+const COLORS = ['#FF8042', '#FFA07A', '#E0115F', '#C71585', '#8B008B', '#9932CC'];
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -78,10 +78,10 @@ export default function Dashboard() {
     let icon;
     switch (activity.type) {
       case 'customer':
-        icon = <UserPlus className="h-4 w-4 text-bizblue-500" />;
+        icon = <UserPlus className="h-4 w-4 text-primary" />;
         break;
       case 'sale':
-        icon = <ShoppingCart className="h-4 w-4 text-bizteal-500" />;
+        icon = <ShoppingCart className="h-4 w-4 text-secondary" />;
         break;
       case 'product':
         icon = <Package className="h-4 w-4 text-amber-500" />;
@@ -103,10 +103,10 @@ export default function Dashboard() {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-        <Button onClick={() => navigate("/sales/new")} className="bg-bizteal-500 hover:bg-bizteal-600">
+        <h1 className="text-3xl font-bold tracking-tight gradient-text">Dashboard</h1>
+        <Button onClick={() => navigate("/sales/new")} className="btn-gradient">
           New Sale
         </Button>
       </div>
@@ -119,6 +119,7 @@ export default function Dashboard() {
           icon={<Users size={24} />}
           trend={{ value: 12, isPositive: true }}
           onClick={() => navigate("/customers")}
+          className="card-hover"
         />
         <StatCard 
           title="Total Products" 
@@ -126,6 +127,7 @@ export default function Dashboard() {
           icon={<Package size={24} />}
           trend={{ value: 5, isPositive: true }}
           onClick={() => navigate("/inventory")}
+          className="card-hover"
         />
         <StatCard 
           title="Total Sales" 
@@ -133,6 +135,7 @@ export default function Dashboard() {
           icon={<ShoppingBag size={24} />}
           trend={{ value: 8, isPositive: true }}
           onClick={() => navigate("/sales")}
+          className="card-hover"
         />
         <StatCard 
           title="Net Profit" 
@@ -140,6 +143,7 @@ export default function Dashboard() {
           icon={<DollarSign size={24} />}
           trend={{ value: 3, isPositive: true }}
           onClick={() => navigate("/reports")}
+          className="card-hover"
         />
       </div>
       
@@ -147,24 +151,24 @@ export default function Dashboard() {
       {(lowStockProducts > 0 || pendingSales > 0) && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {lowStockProducts > 0 && (
-            <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded">
+            <div className="dashboard-card p-4">
               <div className="flex items-center">
                 <AlertCircle className="h-5 w-5 text-amber-500 mr-2" />
                 <p>
-                  <span className="font-medium text-amber-800">Inventory Alert:</span>{" "}
-                  <span className="text-amber-700">{lowStockProducts} products are low in stock</span>
+                  <span className="font-medium text-amber-500">Inventory Alert:</span>{" "}
+                  <span className="text-amber-400">{lowStockProducts} products are low in stock</span>
                 </p>
               </div>
             </div>
           )}
           
           {pendingSales > 0 && (
-            <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+            <div className="dashboard-card p-4">
               <div className="flex items-center">
-                <AlertCircle className="h-5 w-5 text-blue-500 mr-2" />
+                <AlertCircle className="h-5 w-5 text-primary mr-2" />
                 <p>
-                  <span className="font-medium text-blue-800">Payment Alert:</span>{" "}
-                  <span className="text-blue-700">{pendingSales} sales with pending payments</span>
+                  <span className="font-medium text-primary">Payment Alert:</span>{" "}
+                  <span className="text-primary/80">{pendingSales} sales with pending payments</span>
                 </p>
               </div>
             </div>
@@ -177,15 +181,15 @@ export default function Dashboard() {
         {/* Sales chart */}
         <ChartCard 
           title="Sales Overview" 
-          className="lg:col-span-2"
+          className="lg:col-span-2 dashboard-card"
           action={
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" className="bg-background/50 border-border/50">
                   {timeframe === 'week' ? 'Weekly' : timeframe === 'month' ? 'Monthly' : 'Yearly'}
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent align="end" className="bg-card border-border/50">
                 <DropdownMenuItem onClick={() => setTimeframe('week')}>Weekly</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTimeframe('month')}>Monthly</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTimeframe('year')}>Yearly</DropdownMenuItem>
@@ -202,14 +206,26 @@ export default function Dashboard() {
                   formatter={(value) => [`$${value}`, 'Sales']}
                   labelFormatter={(label) => `${label}`} 
                 />
-                <Bar dataKey="sales" fill="#0c92e8" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="sales" radius={[4, 4, 0, 0]}>
+                  {monthlySalesData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={`url(#barGradient${index})`} />
+                  ))}
+                </Bar>
+                <defs>
+                  {monthlySalesData.map((_, index) => (
+                    <linearGradient key={`gradient-${index}`} id={`barGradient${index}`} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="hsl(var(--primary))" />
+                      <stop offset="100%" stopColor="hsl(var(--secondary))" />
+                    </linearGradient>
+                  ))}
+                </defs>
               </BarChart>
             </ResponsiveContainer>
           </div>
         </ChartCard>
         
         {/* Product categories */}
-        <ChartCard title="Product Categories">
+        <ChartCard title="Product Categories" className="dashboard-card">
           <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -239,7 +255,8 @@ export default function Dashboard() {
       <RecentActivityCard 
         title="Recent Activity" 
         activities={recentActivities} 
-        onViewAll={() => console.log("View all activities")} 
+        onViewAll={() => console.log("View all activities")}
+        className="dashboard-card" 
       />
     </div>
   );

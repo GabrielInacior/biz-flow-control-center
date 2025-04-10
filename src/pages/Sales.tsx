@@ -76,19 +76,19 @@ export default function Sales() {
     switch (status) {
       case 'paid':
         return (
-          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 flex items-center gap-1">
+          <Badge variant="outline" className="bg-green-950/20 text-green-400 border-green-900/30 flex items-center gap-1">
             <Check className="h-3 w-3" /> Paid
           </Badge>
         );
       case 'pending':
         return (
-          <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200 flex items-center gap-1">
+          <Badge variant="outline" className="bg-amber-950/20 text-amber-400 border-amber-900/30 flex items-center gap-1">
             <Clock className="h-3 w-3" /> Pending
           </Badge>
         );
       case 'cancelled':
         return (
-          <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200 flex items-center gap-1">
+          <Badge variant="outline" className="bg-red-950/20 text-red-400 border-red-900/30 flex items-center gap-1">
             <XCircle className="h-3 w-3" /> Cancelled
           </Badge>
         );
@@ -98,18 +98,18 @@ export default function Sales() {
   };
   
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Sales</h1>
+        <h1 className="text-3xl font-bold tracking-tight gradient-text">Sales</h1>
         <Button 
-          className="bg-bizteal-500 hover:bg-bizteal-600"
+          className="btn-gradient"
           onClick={() => navigate("/sales/new")}
         >
           <PlusCircle className="h-4 w-4 mr-2" /> New Sale
         </Button>
       </div>
       
-      <Card>
+      <Card className="dashboard-card">
         <CardHeader className="pb-3">
           <CardTitle>Sales Management</CardTitle>
           <CardDescription>
@@ -119,12 +119,12 @@ export default function Sales() {
         <CardContent>
           <div className="flex items-center gap-4 mb-4 flex-wrap">
             <div className="flex items-center space-x-2 flex-1 min-w-[200px]">
-              <Search className="h-4 w-4 text-gray-500" />
+              <Search className="h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search sales..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-1"
+                className="flex-1 bg-background/50"
               />
             </div>
             
@@ -133,6 +133,7 @@ export default function Sales() {
                 variant={filter === "all" ? "default" : "outline"}
                 onClick={() => setFilter("all")}
                 size="sm"
+                className={filter === "all" ? "btn-gradient" : "bg-background/50"}
               >
                 All
               </Button>
@@ -140,6 +141,7 @@ export default function Sales() {
                 variant={filter === "paid" ? "default" : "outline"}
                 onClick={() => setFilter("paid")}
                 size="sm"
+                className={filter === "paid" ? "btn-gradient" : "bg-background/50"}
               >
                 Paid
               </Button>
@@ -147,6 +149,7 @@ export default function Sales() {
                 variant={filter === "pending" ? "default" : "outline"}
                 onClick={() => setFilter("pending")}
                 size="sm"
+                className={filter === "pending" ? "btn-gradient" : "bg-background/50"}
               >
                 Pending
               </Button>
@@ -154,38 +157,39 @@ export default function Sales() {
                 variant={filter === "cancelled" ? "default" : "outline"}
                 onClick={() => setFilter("cancelled")}
                 size="sm"
+                className={filter === "cancelled" ? "btn-gradient" : "bg-background/50"}
               >
                 Cancelled
               </Button>
             </div>
           </div>
           
-          <div className="rounded-md border">
+          <div className="rounded-md border border-border/40">
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead>Sale ID</TableHead>
-                  <TableHead>Customer</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Items</TableHead>
-                  <TableHead>Total</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                <TableRow className="hover:bg-muted/5">
+                  <TableHead className="text-muted-foreground">Sale ID</TableHead>
+                  <TableHead className="text-muted-foreground">Customer</TableHead>
+                  <TableHead className="text-muted-foreground">Date</TableHead>
+                  <TableHead className="text-muted-foreground">Items</TableHead>
+                  <TableHead className="text-muted-foreground">Total</TableHead>
+                  <TableHead className="text-muted-foreground">Status</TableHead>
+                  <TableHead className="text-right text-muted-foreground">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredSales.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center py-6 text-gray-500">
+                    <TableCell colSpan={7} className="text-center py-6 text-muted-foreground">
                       No sales found
                     </TableCell>
                   </TableRow>
                 ) : (
                   filteredSales.map((sale) => (
-                    <TableRow key={sale.id}>
+                    <TableRow key={sale.id} className="hover:bg-muted/5">
                       <TableCell className="font-medium">
                         <div className="flex items-center">
-                          <ShoppingCart className="h-4 w-4 mr-2 text-gray-500" />
+                          <ShoppingCart className="h-4 w-4 mr-2 text-primary" />
                           {sale.id}
                         </div>
                       </TableCell>
@@ -197,17 +201,17 @@ export default function Sales() {
                       <TableCell className="text-right">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon">
+                            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
                               <ChevronDown className="h-4 w-4" />
                               <span className="sr-only">Actions</span>
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem>
+                          <DropdownMenuContent align="end" className="bg-card border-border/40">
+                            <DropdownMenuItem className="focus:bg-muted/30">
                               <Eye className="h-4 w-4 mr-2" /> View Details
                             </DropdownMenuItem>
                             {sale.paymentStatus === 'pending' && (
-                              <DropdownMenuItem>
+                              <DropdownMenuItem className="focus:bg-muted/30">
                                 <Check className="h-4 w-4 mr-2" /> Mark as Paid
                               </DropdownMenuItem>
                             )}
