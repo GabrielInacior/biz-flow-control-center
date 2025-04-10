@@ -16,25 +16,27 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
+const App = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<MainLayout><Dashboard /></MainLayout>} />
-          <Route path="/customers" element={<MainLayout><Customers /></MainLayout>} />
-          <Route path="/inventory" element={<MainLayout><Inventory /></MainLayout>} />
-          <Route path="/sales" element={<MainLayout><Sales /></MainLayout>} />
-          <Route path="/expenses" element={<MainLayout><Expenses /></MainLayout>} />
-          <Route path="/reports" element={<MainLayout><Reports /></MainLayout>} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <Routes>
+            <Route path="/" element={<MainLayout><Dashboard /></MainLayout>} />
+            <Route path="/customers" element={<MainLayout><Customers /></MainLayout>} />
+            <Route path="/inventory" element={<MainLayout><Inventory /></MainLayout>} />
+            <Route path="/sales" element={<MainLayout><Sales /></MainLayout>} />
+            <Route path="/expenses" element={<MainLayout><Expenses /></MainLayout>} />
+            <Route path="/reports" element={<MainLayout><Reports /></MainLayout>} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </TooltipProvider>
       </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+    </QueryClientProvider>
+  );
+};
 
 export default App;
